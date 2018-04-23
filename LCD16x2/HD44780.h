@@ -3,11 +3,11 @@
 //
 // Rutinas:
 // LCD_Init inicializa el controlador del LCD
-// LCD_Cmd env韆 sends LCD controller command
-// LCD_Char env韆 un caracter ascii al display
+// LCD_Cmd env铆a sends LCD controller command
+// LCD_Char env铆a un caracter ascii al display
 // LCD_Clear limpia el display LCD y el cursor se mueve a home
-// LCD_Home el cursor se mueve a la posici髇 home
-// LCD_Goto mueve el cursor a la posici髇 (x,y)
+// LCD_Home el cursor se mueve a la posici贸n home
+// LCD_Goto mueve el cursor a la posici贸n (x,y)
 // LCD_Line mueve el cursor a la linea (x)
 // LCD_Hex muestra un valor hexadecimal
 // LCD_Integer muestra un valor entero
@@ -16,22 +16,22 @@
 // El modulo LCD requiere 6 pines I/O: delas cuales 2 son lineas de control (EN y RS) y 4 lineas de datos
 // (D4, D5, D6, D7).
 //
-// ---------------------------------- Distribuci髇 de los pines del LCD -------------------------------
+// ---------------------------------- Distribuci贸n de los pines del LCD -------------------------------
 //		   ______________________________________________
-//		 ||												 ||
-//		 ||												 ||
-//		 ||												 ||
+//		 ||						 ||
+//		 ||						 ||
+//		 ||						 ||
 //		 ||______________________________________________||
 //		   |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
 // PINES   1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16
 //       --------------------------------------------------
 //		   G +5V G  RS RW E              D4 D5 D6 D7 +5V G
 //
-// PIN	  CONEXI覰
+// PIN	  CONEXI脫N
 //	1		GND
 //	2		VCC
 //	3		Contraste (Pot 10K GND y VCC)
-//	4		RS dato (el pin en 1) o instrucci髇 (comando LCD) (el pin en 0)
+//	4		RS dato (el pin en 1) o instrucci贸n (comando LCD) (el pin en 0)
 //	5		RW conectado a GND
 //	6		E  enable
 //	7		D0 No se conecta
@@ -47,24 +47,24 @@
 #ifndef HD44780_H_
 #define HD44780_H_
 
-// -------------------------------- Definiciones b醩icas ----------------------------------------------
-#define ClearBit(x,y) x &= ~(1<<y)				// equivalent to cbi(x,y)
-#define SetBit(x,y)   x |= (1<<y)				// equivalent to sbi(x,y)
+// -------------------------------- Definiciones b谩sicas ----------------------------------------------
+#define ClearBit(x,y) x &= ~(1<<y)					// equivalent to cbi(x,y)
+#define SetBit(x,y)   x |= (1<<y)					// equivalent to sbi(x,y)
 
 // -------------------------------- Librerias a Usar --------------------------------------------------
-#include <stdlib.h>								// librer韆 estandar
+#include <stdlib.h>							// librer铆a estandar
 
 // -------------------------------- Definiciones Utiles -----------------------------------------------
 typedef uint8_t byte;							// declaracion de entero para compatibilidad
 typedef int8_t sbyte;							// con otros compiladores
 
-// -------------------------------- Definiciones de configuraci髇 -------------------------------------
-#define LCD_RS	0								// pin para LCD R/S
-#define LCD_E	1								// pin para LCD ENABLE
-#define DAT4	2								// pin para d4
-#define DAT5	3								// pin para d5
-#define DAT6	4								// pin para d6
-#define DAT7	5								// pin para d7
+// -------------------------------- Definiciones de configuraci贸n -------------------------------------
+#define LCD_RS	0							// pin para LCD R/S
+#define LCD_E	1							// pin para LCD ENABLE
+#define DAT4	2							// pin para d4
+#define DAT5	3							// pin para d5
+#define DAT6	4							// pin para d6
+#define DAT7	5							// pin para d7
 #define port	PORTD							// asignamos el puerto a usar ej. PORTB
 
 // -------------------------------- Comandos de control para HD44780 ----------------------------------
@@ -77,117 +77,117 @@ void msDelay(int delay)							// Retardo exclusivo para el manejo del LCD
 	_delay_ms(1);
 }
 
-void PulseEnableLine ()							// Funci髇 para habilitar el LCD
+void PulseEnableLine ()							// Funci贸n para habilitar el LCD
 {
-	SetBit(port,LCD_E);							// Manda un 1 en el pin ENABLE
-	_delay_us(40);								// Retardo de 40 microsegundos
+	SetBit(port,LCD_E);						// Manda un 1 en el pin ENABLE
+	_delay_us(40);							// Retardo de 40 microsegundos
 	ClearBit(port,LCD_E);						// Manda un 0 en el pin ENABLE
 }
 
-void SendNibble(byte data)						// Funci髇 para manejo de cuartetos
+void SendNibble(byte data)						// Funci贸n para manejo de cuartetos
 {
-	port &= 0xC3;								// 11000011 = limpia 4 lineas de datos
+	port &= 0xC3;							// 11000011 = limpia 4 lineas de datos
 	if(data & (1<<4))							
 	{
-		SetBit(port,DAT4);						// Manda un 1 en DAT4
+		SetBit(port,DAT4);					// Manda un 1 en DAT4
 	}
 	if(data & (1<<5))
 	{
-		SetBit(port,DAT5);						// Manda un 1 en DAT5
+		SetBit(port,DAT5);					// Manda un 1 en DAT5
 	}
 	if(data & (1<<6))
 	{
-		SetBit(port,DAT6);						// Manda un 1 en DAT6
+		SetBit(port,DAT6);					// Manda un 1 en DAT6
 	}
 	if(data & (1<<7))
 	{
-		SetBit(port,DAT7);						// Manda un 1 en DAT7
+		SetBit(port,DAT7);					// Manda un 1 en DAT7
 	}
-	PulseEnableLine();							// clock 4 bits into controller
+	PulseEnableLine();						// clock 4 bits into controller
 }
 
-void SendByte (byte data)						// Funci髇 para enviar 8 bits (1 byte)
+void SendByte (byte data)						// Funci贸n para enviar 8 bits (1 byte)
 {
-	SendNibble(data);							// Env韆 los 4 bits mas significativos
-	SendNibble(data<<4);						// Env韆 los 4 bits menos significativos
-	ClearBit(port,5);							// Limpia 
+	SendNibble(data);						// Env铆a los 4 bits mas significativos
+	SendNibble(data<<4);						// Env铆a los 4 bits menos significativos
+	ClearBit(port,5);						// Limpia 
 }
 
-void LCD_Cmd (byte cmd)							// Funci髇 para comandos del HD44780
+void LCD_Cmd (byte cmd)							// Funci贸n para comandos del HD44780
 {
 	ClearBit(port,LCD_RS);						// Pone un 0 en R/S = comandos
-	SendByte(cmd);								// Env韆 los comandos
+	SendByte(cmd);							// Env铆a los comandos
 }
 
-void LCD_Char (byte ch)							// Funci髇 para characteres
+void LCD_Char (byte ch)							// Funci贸n para characteres
 {
 	SetBit(port,LCD_RS);						// Pone un 1 en R/S = characteres
-	SendByte(ch);								// Env韆 los characteres
+	SendByte(ch);							// Env铆a los characteres
 }
 
 void LCD_Init()
 {
-	LCD_Cmd(0x33);								// Inicializa el controlador
-	LCD_Cmd(0x32);								// Configura en modo de solo 4 bits de entrada
-	LCD_Cmd(0x28);								// Configura 2 l韓eas, y matriz 5x7
-	LCD_Cmd(0x0C);								// Apaga el cursor (0x0E para encenderlo)
-	LCD_Cmd(0x06);								// Direcci髇 del cursor = derecha
-	LCD_Cmd(0x01);								// Inicia con el display l韒pio
-	msDelay(3);									// Retardo para inicializar el LCD
+	LCD_Cmd(0x33);							// Inicializa el controlador
+	LCD_Cmd(0x32);							// Configura en modo de solo 4 bits de entrada
+	LCD_Cmd(0x28);							// Configura 2 l铆neas, y matriz 5x7
+	LCD_Cmd(0x0C);							// Apaga el cursor (0x0E para encenderlo)
+	LCD_Cmd(0x06);							// Direcci贸n del cursor = derecha
+	LCD_Cmd(0x01);							// Inicia con el display l铆mpio
+	msDelay(3);							// Retardo para inicializar el LCD
 }
 
-void LCD_Clear()								// Funci髇 para limpiar el LCD
+void LCD_Clear()							// Funci贸n para limpiar el LCD
 {
 	LCD_Cmd(CLEARDISPLAY);						// Limpia el LCD
-	msDelay(3);									// Retardo para procesar el comando
+	msDelay(3);							// Retardo para procesar el comando
 }
 
-void LCD_Home()									// Funci髇 para colocar el cursor en home sin limpiar
+void LCD_Home()								// Funci贸n para colocar el cursor en home sin limpiar
 {
-	LCD_Cmd(SETCURSOR);							// Comando para colocar el cursor en posici髇 home
+	LCD_Cmd(SETCURSOR);						// Comando para colocar el cursor en posici贸n home
 }
 
-void LCD_Gotoxy(byte x, byte y)					// Funci髇 para mover el cursor a una posici髇 espec韋ica
+void LCD_Gotoxy(byte x, byte y)						// Funci贸n para mover el cursor a una posici贸n espec铆fica
 {
-	byte addr = 0;								// La l韓ea 0 comienza en la direcci髇 0x00
+	byte addr = 0;							// La l铆nea 0 comienza en la direcci贸n 0x00
 	switch (y)
 	{
-		case 1: addr = 0x40; break;				// La l韓ea 1 comienza en la direcci髇 0x40
+		case 1: addr = 0x40; break;				// La l铆nea 1 comienza en la direcci贸n 0x40
 		case 2: addr = 0x14; break;
 		case 3: addr = 0x54; break;
 	}
-	LCD_Cmd(SETCURSOR+addr+x);					// Actualiza la posici髇 del cursor en x,y
+	LCD_Cmd(SETCURSOR+addr+x);					// Actualiza la posici贸n del cursor en x,y
 }
 
-void LCD_Line(byte row)							// Funci髇 para mover el cursor a una l韓ea especif韈a
+void LCD_Line(byte row)							// Funci贸n para mover el cursor a una l铆nea especif铆ca
 {
-	LCD_Gotoxy(0,row);							// Se mueve el cursor a la columna 0, linea y
+	LCD_Gotoxy(0,row);						// Se mueve el cursor a la columna 0, linea y
 }
 
-void LCD_Message(const char *text)				// Funci髇 para mostrar una cadena en el LCD
+void LCD_Message(const char *text)					// Funci贸n para mostrar una cadena en el LCD
 {
-	while (*text)								// 
+	while (*text)							// 
 	{
-		LCD_Char(*text++);						// Env韆 un character y se actualiza el puntero *text	
+		LCD_Char(*text++);					// Env铆a un character y se actualiza el puntero *text	
 	}
 	
 }
 
 void LCD_Hex(int data)							// Muestra el valor hexadecimal de los datos actuales en el LCD
 {
-	char st[8] = "";							// Guarda espacio para los resultados
-	itoa(data,st,16);							// convierte a ascii hexadecimal
+	char st[8] = "";						// Guarda espacio para los resultados
+	itoa(data,st,16);						// convierte a ascii hexadecimal
 	//LCD_Message("0x");						// add prefix "0x" if desired
-	LCD_Message(st);							// Manda el resultado al LCD
+	LCD_Message(st);						// Manda el resultado al LCD
 }
 void LCD_Integer(int data)						// Muestra el valor entero de los datos actuales en el LCD
 {
-	char st[8] = "";							// Guarda espacio para los resultados
-	itoa(data,st,10);							// Convierte a ascii
-	LCD_Message(st);							// Muestra el resultado en el LCD
+	char st[8] = "";						// Guarda espacio para los resultados
+	itoa(data,st,10);						// Convierte a ascii
+	LCD_Message(st);						// Muestra el resultado en el LCD
 }
 // --------------------------------- Funciones Demo ------------------------------------------
-void UpdateCursor (byte count)					// Funci髇 para FillScreen
+void UpdateCursor (byte count)						// Funci贸n para FillScreen
 {
 	switch(count)
 	{
@@ -198,7 +198,7 @@ void UpdateCursor (byte count)					// Funci髇 para FillScreen
 	}
 }
 
-char GetNextChar(char ch)						// Funci髇 para FillScreen
+char GetNextChar(char ch)						// Funci贸n para FillScreen
 {
 	if ((ch<0x20) | (ch>=0xFF))
 	return 0x20;
@@ -207,11 +207,11 @@ char GetNextChar(char ch)						// Funci髇 para FillScreen
 	return ++ch;
 }
 
-#define NUMCHARS 64								// N鷐ero de caracteres por pantalla
+#define NUMCHARS 64							// N煤mero de caracteres por pantalla
 
 void FillScreen ()
 // Llena la pantalla con caracteres ascii
-// NUMCHARS debe de tener un valor entre 32 a 64 characteres, dependiendo del tama駉 del display
+// NUMCHARS debe de tener un valor entre 32 a 64 characteres, dependiendo del tama帽o del display
 // NUMCAHRS = 32 para displays de 16x2; NUMCHARS = 64 para display 20x4.
 // para displays de 4 lineas el contador acendente debe de ser de 1-99.
 {
@@ -220,13 +220,13 @@ void FillScreen ()
 	for (byte count=1;count<100;count++)
 	{
 		LCD_Gotoxy(18,0);
-		LCD_Integer(count);						// show counter (vis on 4-liners only)
-		for (byte i=0;i<NUMCHARS;i++)			// do a screenful of characters
+		LCD_Integer(count);					// muestra el contador (visualiza solo 4 lineas)
+		for (byte i=0;i<NUMCHARS;i++)				// hace un llenado de caracteres
 		{
-			UpdateCursor(i);					// go to next line, if necessary
-			LCD_Char(ch);						// show current ascii character
-			ch = GetNextChar(ch);				// update to next character
-			msDelay(60);						// set animation speed
+			UpdateCursor(i);				// se mueve a la siguiente l铆nea, si es necesario
+			LCD_Char(ch);					// muestra el actual caracter ascii
+			ch = GetNextChar(ch);				// actualiza a帽 siguiente caracter
+			msDelay(60);					// configura la velocidad de animaci贸n
 		}
 	}
 }
