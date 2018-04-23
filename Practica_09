@@ -12,6 +12,8 @@
  - No restriction on use. You can use, modify and redistribute it for personal, non-profit or commercial product UNDER YOUR RESPONSIBILITY.
  - Redistributions of source code must retain the above copyright notice.
 ===============================================================================
+*/
+
 //----------------------------------- Frecuencia del CPU --------------------------------------
 #define F_CPU 16000000UL        		// El AVR trabajará a una velocidad de Reloj de 16MHz.
 //----------------------------------- Librerías -----------------------------------------------
