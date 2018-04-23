@@ -1,6 +1,17 @@
 /*
- * Practica_09.c
- */ 
+===============================================================================
+ Name        : Practica_09.c
+ Author      : Juan Ignacio Avelar Miranda
+ Version     : 1.0
+ License     : Open Source (LGPL)
+ Copyright   : Copyright (C)
+ Description : Programa que prende y apaga un LED.
+
+ This is a free software and is opened for education, research and commercial developments under license policy of following terms:
+ - This is a free software and there is NO WARRANTY.
+ - No restriction on use. You can use, modify and redistribute it for personal, non-profit or commercial product UNDER YOUR RESPONSIBILITY.
+ - Redistributions of source code must retain the above copyright notice.
+===============================================================================
 //----------------------------------- Frecuencia del CPU --------------------------------------
 #define F_CPU 16000000UL        // El AVR trabajara a una velocidad de Reloj de 16MHz.
 //----------------------------------- Librerías -----------------------------------------------
