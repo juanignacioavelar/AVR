@@ -4,7 +4,7 @@
  * Created: 10/05/2017 10:27:59 a.m.
  * Author : NV57H
  */ 
-#define F_CPU 8000000UL
+#define F_CPU 16000000UL
 #include <avr/io.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -19,8 +19,6 @@ int main(void)
 	LCD_Message("HOLA MUNDO");
 
 	while(1)
-	{
-		
+	{		
 	}
 }
-
