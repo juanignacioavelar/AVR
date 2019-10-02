@@ -13,16 +13,13 @@
  - Redistributions of source code must retain the above copyright notice.
 ===============================================================================
 */
-
 //----------------------------------- Frecuencia del CPU --------------------------------------
-#define F_CPU 16000000UL        		// El AVR trabajar· a una velocidad de Reloj de 16MHz.
-
-//----------------------------------- LibrerÌas -----------------------------------------------
-#include <avr/io.h>             		// LibrerÌa colocada automaticamente por el wizard de Atmel Studio
-#include <util/delay.h>         		// LibrerÌa para retardo
-
+#define F_CPU 16000000UL        		// El AVR trabajar√° a una velocidad de Reloj de 16MHz.
+//----------------------------------- Librer√≠as -----------------------------------------------
+#include <avr/io.h>             		// Librer√≠a colocada automaticamente por el wizard de Atmel Studio
+#include <util/delay.h>         		// Librer√≠a para retardo
 //=================================== Programa Principal ======================================
-int main(void)                  		// FunciÛn Principal que no devuelve nada.
+int main(void)                  		// Funci√≥n Principal que no devuelve nada.
 {
 	DDRD = 0b11111111;					// Configura los 8 pines como salida del puerto D.
 	PORTD = 0b00000000;					// Limpiamos el puerto D
